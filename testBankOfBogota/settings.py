@@ -13,12 +13,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import sys
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+load_dotenv()  # Cargar variables de entorno desde el archivo .env
 # applications' in path
-sys.path.insert(0, os.path.join(BASE_DIR, 'applications'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Library Applications
+    'rest_framework',
      # Backend Applications
-    'products',
-    'users',
-    'inventory',
+    'applications.products', 
+    'applications.inventory',
+    'applications.users',
 ]
 
 MIDDLEWARE = [
@@ -76,29 +78,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'testBankOfBogota.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # Data de .env
-CLIENT_MONGODB = os.getenv('CLIENT_MONGODB')
-MONGO_DB = os.getenv('MONGO_DB')
-DATABASE_USER = os.getenv('DATABASE_USER')
-DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
-DATABASE_HOST = os.getenv('DATABASE_HOST')
-DATABASE_PORT = os.getenv('DATABASE_PORT')
-DATABASE_NAME = os.getenv('DATABASE_NAME')
-
-
+DATABASE_ROUTERS = ['testBankOfBogota.db_router.DatabaseRouter']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': DATABASE_NAME,
-        'USER': DATABASE_USER,
-        'PASSWORD': DATABASE_PASSWORD,
-        'HOST': DATABASE_HOST,  
-        'PORT': DATABASE_PORT,       
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
@@ -106,14 +98,14 @@ DATABASES = {
     },
     'mongo': {
         'ENGINE': 'djongo',
-        'NAME': MONGO_DB,
+        'NAME': os.getenv('MONGO_DB'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': CLIENT_MONGODB
-,
+            'host': os.getenv('CLIENT_MONGODB'),
         },
     }
 }
+
 
 
 

@@ -21,9 +21,9 @@ from django.urls import re_path as url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('products.urls')),
-    path('api/', include('users.urls')),
-    path('api/', include('inventory.urls')),
+    path('api/', include('applications.products.urls')),
+    path('api/', include('applications.users.urls')),
+    path('api/', include('applications.inventory.urls')),
     
     # Reset Password Functionality for Django Admin
     url(

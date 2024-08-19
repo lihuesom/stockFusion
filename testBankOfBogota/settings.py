@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Library Applications
     'rest_framework',
+    'corsheaders',
      # Backend Applications
     'applications.products', 
     'applications.inventory',
@@ -57,7 +58,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+#Config CORS
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+CORS_URLS_REGEX = r'^/api/.*$'
 
 ROOT_URLCONF = 'testBankOfBogota.urls'
 

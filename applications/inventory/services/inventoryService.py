@@ -51,9 +51,8 @@ class InventoryService:
     def update_inventory(pk, data):
         object_id = ObjectId(pk)
         
-        if  data.get('approved_by'):
-            approved_by = get_object_or_404(User, email=data.get('approved_by'))
-            approved_by = {"pk": approved_by.pk, "identification": approved_by.identification}
+        approved_by = get_object_or_404(User, email="example@example.com")
+        approved_by = {"pk": approved_by.pk, "identification": approved_by.identification}
             
         instance = get_object_or_404(Inventory, _id=object_id)
         instance.approved_by = approved_by or  instance.approved_by
